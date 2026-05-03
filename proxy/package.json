@@ -1,0 +1,10 @@
+{
+  "name": "nutshell-proxy",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Vercel Edge Function that proxies summarization requests to the Groq API. Holds the GROQ_API_KEY server-side so the extension never sees it.",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  }
+}
