@@ -131,7 +131,19 @@ function loadingTemplate() {
 function errorTemplate(message) {
   const el = document.createElement("div");
   el.className = "error-card";
-  el.textContent = message ?? "Something went wrong.";
+
+  const msg = document.createElement("p");
+  msg.className = "error-card__msg";
+  msg.textContent = message ?? "Something went wrong.";
+  el.appendChild(msg);
+
+  const retry = document.createElement("button");
+  retry.type = "button";
+  retry.className = "btn btn--small";
+  retry.textContent = "Try again";
+  retry.addEventListener("click", handleSummarize);
+  el.appendChild(retry);
+
   return el;
 }
 

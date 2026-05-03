@@ -37,6 +37,20 @@ body {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  overflow: hidden;
+}
+
+.header,
+.page-info,
+.actions,
+.empty-state,
+.footer {
+  flex-shrink: 0;
+}
+
+#summary {
+  flex: 0 1 auto;
+  min-height: 0;
   overflow-y: auto;
 }
 
@@ -323,9 +337,17 @@ body {
 .error-card {
   background: var(--danger);
   border: var(--border-width) solid var(--border-color);
-  padding: 10px 12px;
+  padding: 12px;
   font-size: 13px;
   font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.error-card__msg {
+  margin: 0;
 }
 
 /* ---------- Footer ---------- */
@@ -335,15 +357,15 @@ body {
 }
 
 /* ---------- Scrollbar ---------- */
-body::-webkit-scrollbar {
+#summary::-webkit-scrollbar {
   width: 10px;
 }
 
-body::-webkit-scrollbar-track {
+#summary::-webkit-scrollbar-track {
   background: var(--bg);
 }
 
-body::-webkit-scrollbar-thumb {
+#summary::-webkit-scrollbar-thumb {
   background: var(--fg);
   border: 2px solid var(--bg);
 }
