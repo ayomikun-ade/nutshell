@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Nutshell — AI Page Summarizer",
+  "version": "0.1.0",
+  "description": "Summarize any webpage into bullet points, key insights, and an estimated reading time.",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Summarize this page with Nutshell"
+  },
+  "background": {
+    "service_worker": "background/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": []
+}
