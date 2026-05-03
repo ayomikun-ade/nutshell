@@ -89,6 +89,48 @@ body {
   word-break: break-word;
 }
 
+/* ---------- Actions row ---------- */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---------- Mode switch ---------- */
+.mode-switch {
+  display: inline-flex;
+  border: var(--border-width) solid var(--border-color);
+  box-shadow: var(--shadow-pressed);
+  align-self: flex-start;
+  background: var(--surface);
+}
+
+.mode-btn {
+  background: transparent;
+  border: none;
+  padding: 6px 14px;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  color: var(--fg);
+}
+
+.mode-btn + .mode-btn {
+  border-left: var(--border-width) solid var(--border-color);
+}
+
+.mode-btn[aria-pressed="true"] {
+  background: var(--primary);
+}
+
+.mode-btn:focus-visible {
+  outline: 3px solid var(--info);
+  outline-offset: -3px;
+}
+
 /* ---------- Buttons ---------- */
 .btn {
   font-family: inherit;
@@ -138,6 +180,23 @@ body {
   background: var(--surface);
 }
 
+.btn--small {
+  padding: 5px 12px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: var(--shadow-pressed);
+}
+
+.btn--small:hover:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0 var(--border-color);
+}
+
+.btn--small:active:not(:disabled) {
+  transform: translate(2px, 2px);
+}
+
 /* ---------- Empty state ---------- */
 .empty-state {
   background: var(--surface);
@@ -177,8 +236,16 @@ body {
 
 .summary-meta {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
+  gap: 8px;
+}
+
+.summary-meta__pills {
+  display: flex;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
 .pill {
