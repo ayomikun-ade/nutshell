@@ -157,4 +157,3 @@ See [proxy/README.md](proxy/README.md) — covers `vercel dev` setup and a curl 
 
 - **Mozilla Readability** ([github.com/mozilla/readability](https://github.com/mozilla/readability)) — Apache-2.0, vendored at v0.5.0
 - **Groq** for the inference API
-- Built for HNG Frontend Wizards Stage 4A
