@@ -175,9 +175,14 @@ body {
   padding-bottom: 4px;
 }
 
+.summary-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 .pill {
   display: inline-block;
-  align-self: flex-start;
   padding: 4px 10px;
   border: var(--border-width) solid var(--border-color);
   font-size: 12px;
@@ -187,6 +192,10 @@ body {
 
 .pill--info {
   background: var(--info);
+}
+
+.pill--cached {
+  background: var(--bg);
 }
 
 .bullet-list {

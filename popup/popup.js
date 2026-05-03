@@ -112,12 +112,21 @@ function summaryTemplate(summary) {
   const wrap = document.createElement("div");
   wrap.className = "summary-content";
 
+  const meta = document.createElement("div");
+  meta.className = "summary-meta";
   if (summary.readingTime) {
-    const pill = document.createElement("p");
-    pill.className = "pill pill--info";
-    pill.textContent = `~${summary.readingTime} min read`;
-    wrap.appendChild(pill);
+    const time = document.createElement("span");
+    time.className = "pill pill--info";
+    time.textContent = `~${summary.readingTime} min read`;
+    meta.appendChild(time);
   }
+  if (summary.cached) {
+    const cached = document.createElement("span");
+    cached.className = "pill pill--cached";
+    cached.textContent = "Cached";
+    meta.appendChild(cached);
+  }
+  if (meta.childElementCount) wrap.appendChild(meta);
 
   if (summary.bullets?.length) {
     wrap.appendChild(sectionHeading("Summary"));
