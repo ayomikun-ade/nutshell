@@ -7,10 +7,40 @@
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <main>
-      <h1>Nutshell</h1>
-      <p class="tagline">Scaffold ready — UI lands in stage 2.</p>
-    </main>
+    <header class="header">
+      <h1 class="brand">Nutshell</h1>
+      <span class="brand-mark" aria-hidden="true">&#9656;</span>
+    </header>
+
+    <section class="page-info" aria-label="Current page">
+      <p class="page-info__label">Current page</p>
+      <p class="page-info__title" id="page-title">Loading&hellip;</p>
+    </section>
+
+    <div class="actions">
+      <button id="summarize-btn" class="btn btn--primary" type="button">
+        <span class="btn__label">Summarize page</span>
+      </button>
+    </div>
+
+    <section id="empty-state" class="empty-state">
+      <p>Click <strong>Summarize page</strong> to extract this page into bullets, key insights, and reading time.</p>
+    </section>
+
+    <section
+      id="summary"
+      class="summary"
+      role="region"
+      aria-label="Page summary"
+      aria-live="polite"
+      aria-busy="false"
+      hidden
+    ></section>
+
+    <footer id="footer" class="footer" hidden>
+      <button id="clear-btn" class="btn btn--ghost" type="button">Clear</button>
+    </footer>
+
     <script src="popup.js"></script>
   </body>
 </html>
