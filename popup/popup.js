@@ -38,8 +38,23 @@ function bindEvents() {
 
 async function handleSummarize() {
   setState({ status: "loading", error: null });
-  await new Promise((r) => setTimeout(r, 1200));
-  setState({ status: "success", summary: stubSummary() });
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tab?.id) throw new Error("No active tab.");
+    if (!tab.url || !/^https?:/i.test(tab.url)) {
+      throw new Error("Nutshell only works on regular web pages (http / https).");
+    }
+
+    const response = await chrome.runtime.sendMessage({
+      type: "SUMMARIZE",
+      tabId: tab.id,
+    });
+
+    if (!response?.ok) throw new Error(response?.error || "No response from background worker.");
+    setState({ status: "success", summary: response.data });
+  } catch (e) {
+    setState({ status: "error", error: e?.message || String(e) });
+  }
 }
 
 function handleClear() {
@@ -50,20 +65,6 @@ function handleClear() {
 function setState(patch) {
   Object.assign(state, patch);
   render();
-}
-
-function stubSummary() {
-  return {
-    readingTime: 4,
-    bullets: [
-      "Stage 2 wires the popup with neubrutalism styling and all UI states.",
-      "The Summarize button cycles through idle, loading, and success states.",
-      "Real AI integration arrives in stages 3-5 once the proxy is live.",
-    ],
-    insights: [
-      "Stub data — replaced once the background worker is wired up.",
-    ],
-  };
 }
 
 function render() {
