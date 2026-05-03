@@ -94,7 +94,6 @@ async function fetchSummary(extracted, mode) {
     siteName: extracted.siteName,
     byline: extracted.byline,
     method: extracted.method,
-    truncated: extracted.truncated,
     wordCount: extracted.wordCount,
     readingTime,
     bullets: Array.isArray(data.bullets) ? data.bullets : [],

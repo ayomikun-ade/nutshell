@@ -12,7 +12,7 @@ A single-function Vercel Edge proxy that forwards summarization requests from th
 
 ```json
 {
-  "text": "string (100..12000 chars)",
+  "text": "string (>=100 chars)",
   "mode": "default | brief",
   "title": "string (optional, <=200 chars)"
 }
@@ -79,4 +79,4 @@ curl -X POST http://localhost:3000/api/summarize \
 
 - **No rate limiting.** Anyone who learns the proxy URL can call it and burn your Groq quota. For a local-install extension this is acceptable; for production, add per-IP throttling via Upstash Redis or Vercel KV (the proxy URL would need a stateful store since Edge functions are stateless across invocations).
 - **No auth.** A shared-secret header (`X-Nutshell-Token`) baked into both the extension and the proxy env would mitigate URL-discovery attacks without adding state. Skipped for v1 to keep configuration simple.
-- **Hardcoded text cap.** 12,000 chars matches the extension's extraction cap. Bigger pages get truncated client-side before they ever hit the proxy.
+- **No upper bound on text size.** Only the 100-char minimum is enforced. Groq's 128K-token context (≈500K chars) is the practical ceiling — anything beyond that returns a Groq error which the proxy surfaces as a 502.

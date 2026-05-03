@@ -4,7 +4,6 @@ export const config = {
 
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 const DEFAULT_MODEL = "llama-3.3-70b-versatile";
-const MAX_TEXT_LENGTH = 12000;
 const MIN_TEXT_LENGTH = 100;
 
 const corsHeaders = {
@@ -41,11 +40,10 @@ export default async function handler(req) {
     return json({ error: "Invalid JSON body." }, 400);
   }
 
-  const rawText = typeof body?.text === "string" ? body.text.trim() : "";
-  if (rawText.length < MIN_TEXT_LENGTH) {
+  const text = typeof body?.text === "string" ? body.text.trim() : "";
+  if (text.length < MIN_TEXT_LENGTH) {
     return json({ error: "Text too short to summarize." }, 400);
   }
-  const text = rawText.slice(0, MAX_TEXT_LENGTH);
   const mode = body?.mode === "brief" ? "brief" : "default";
   const title = typeof body?.title === "string" ? body.title.slice(0, 200) : "";
 
@@ -108,13 +106,20 @@ function buildMessages({ text, mode, title }) {
   const insightsInstruction =
     mode === "brief"
       ? "Return an empty array for insights."
-      : "Return 1 to 3 sharper, non-obvious takeaways a thoughtful reader would extract.";
+      : "Return 1 to 3 sharper, non-obvious takeaways a thoughtful reader would extract — implications, tensions, or context the page hints at but doesn't spell out plainly.";
 
   const system = [
-    "You are an expert page summarizer.",
-    "You will be given the readable text of a webpage. Produce a JSON object with two keys:",
-    `- "bullets": ${bulletInstruction} Each bullet must be a complete sentence under 25 words. Do not start with "The article", "This page", "The author", or similar throat-clearing — get straight to the substance.`,
-    `- "insights": ${insightsInstruction} Each insight must be one sentence under 30 words.`,
+    "You are an expert page summarizer who produces information-dense bullets that respect the reader's time.",
+    "",
+    "Given the readable text of a webpage, produce a JSON object with two keys:",
+    "",
+    `"bullets": ${bulletInstruction} Each bullet should be a substantive sentence of roughly 18 to 30 words that conveys concrete information — facts, numbers, names, claims, or specific findings. Avoid vague openers like "The article discusses…" or "This page covers…".`,
+    "",
+    "  Bad bullet:  \"JWST captured images of distant galaxies.\"",
+    "  Good bullet: \"JWST captured infrared images of galaxies that existed just 300 million years after the Big Bang, far earlier than previously observed.\"",
+    "",
+    `"insights": ${insightsInstruction} Each insight should be one sentence of roughly 20 to 35 words.`,
+    "",
     "Output ONLY the raw JSON object — no markdown, no commentary, no code fences.",
   ].join("\n");
 

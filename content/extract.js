@@ -1,6 +1,5 @@
 (() => {
   const MIN_TEXT_LENGTH = 200;
-  const MAX_TEXT_LENGTH = 12000;
 
   function extractWithReadability() {
     if (typeof Readability !== "function") return null;
@@ -111,7 +110,5 @@
   const result = extractWithReadability() || extractWithHeuristics();
   result.url = location.href;
   result.wordCount = (result.text.match(/\S+/g) || []).length;
-  result.truncated = result.text.length > MAX_TEXT_LENGTH;
-  if (result.truncated) result.text = result.text.slice(0, MAX_TEXT_LENGTH);
   return result;
 })();
