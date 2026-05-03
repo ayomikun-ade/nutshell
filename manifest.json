@@ -16,5 +16,7 @@
     "storage",
     "scripting"
   ],
-  "host_permissions": []
+  "host_permissions": [
+    "https://nutshell-peach.vercel.app/*"
+  ]
 }
